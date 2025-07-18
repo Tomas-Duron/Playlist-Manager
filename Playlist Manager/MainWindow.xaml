@@ -5,8 +5,238 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Playlist_Manager"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
+        Title="Playlist Manager" Height="450" Width="800">
+    <Grid x:Name="WindowGrid">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="7*" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
 
+        <Grid
+            Grid.Row="1"
+            Name="MusicBar">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <Grid Name="CurrentSongGrid" Grid.Column="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <Border Grid.Column="0" Background="Pink" Name="CurrentSongImageBorder">
+                    <Image Source="/Assets/Images/deargod.png" Name="CurrentSongImage"/>
+                </Border>
+
+                <Grid Grid.Column="1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+
+                    <TextBlock Name="SongTitle" Text="Song Title" Grid.Row="0" VerticalAlignment="Bottom" HorizontalAlignment="Center"/>
+                    <TextBlock x:Name="SongArtist" Text="Song Artist" Grid.Row="1" VerticalAlignment="Top" HorizontalAlignment="Center"/>
+                </Grid>
+
+                <Button x:Name="AddToPlaylist" Grid.Column="2" Content="Add to playlist"/>
+            </Grid>
+
+            <Grid x:Name="MusicPlayControls" Grid.Column="1">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+
+                    <Grid x:Name="MusicControls" Grid.Row="0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+
+                        <Button x:Name="ShuffleButton"
+                                Grid.Column="0"
+                                VerticalAlignment="Center"
+                                HorizontalAlignment="Center"
+                                Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}">
+                            <Path
+                                Fill="Black"
+                                Stretch="Uniform"
+                                Data="M560-160v-80h104L537-367l57-57 126 126v-102h80v240H560Zm-344 0-56-56 504-504H560v-80h240v240h-80v-104L216-160Zm151-377L160-744l56-56 207 207-56 56Z"
+                                RenderTransformOrigin="0.5, 0.5" />
+                        </Button>
+
+                        <Button x:Name="SkipPreviousButton"
+                                Grid.Column="1"
+                                VerticalAlignment="Center"
+                                HorizontalAlignment="Center"
+                                Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}">
+                            <Path
+                                Fill="Black"
+                                Stretch="Uniform"
+                                Data="M220-240v-480h80v480h-80Zm520 0L380-480l360-240v480Zm-80-240Zm0 90v-180l-136 90 136 90Z"
+                                RenderTransformOrigin="0.5, 0.5">
+                                <Path.RenderTransform>
+                                    <ScaleTransform ScaleX="0.9" ScaleY="0.9" />
+                                </Path.RenderTransform>
+                            </Path>
+                        </Button>
+
+                        <Button x:Name="PausePlayButton"
+                                Grid.Column="2"
+                                VerticalAlignment="Center"
+                                HorizontalAlignment="Center"
+                                Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}"
+                                Click="PausePlayButton_Click">
+                            <Path
+                                Name="PausePlayButtonPath"
+                                Fill="Black"
+                                Stretch="Uniform"
+                                Data="m380-300 280-180-280-180v360ZM480-80q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Z"
+                                RenderTransformOrigin="0.5, 0.5">
+                                <Path.RenderTransform>
+                                    <ScaleTransform ScaleX="1.5" ScaleY="1.5" />
+                                </Path.RenderTransform>
+                            </Path>
+                        </Button>
+
+                        <Button x:Name="SkipNextButton"
+                            Grid.Column="3"
+                            VerticalAlignment="Center"
+                            HorizontalAlignment="Center"
+                            Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}">
+                            <Path
+                                Fill="Black"
+                                Stretch="Uniform"
+                                Data="M660-240v-480h80v480h-80Zm-440 0v-480l360 240-360 240Zm80-240Zm0 90 136-90-136-90v180Z"
+                                RenderTransformOrigin="0.5, 0.5">
+                                <Path.RenderTransform>
+                                    <ScaleTransform ScaleX="0.9" ScaleY="0.9" />
+                                </Path.RenderTransform>
+                            </Path>
+                        </Button>
+
+                        <Button x:Name="RepeatButton"
+                            Grid.Column="4"
+                            VerticalAlignment="Center"
+                            HorizontalAlignment="Center"
+                            Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}">
+                            <Path
+                                Fill="Black"
+                                Stretch="Uniform"
+                                Data="M280-80 120-240l160-160 56 58-62 62h406v-160h80v240H274l62 62-56 58Zm-80-440v-240h486l-62-62 56-58 160 160-160 160-56-58 62-62H280v160h-80Z"
+                                RenderTransformOrigin="0.5, 0.5" />
+                        </Button>
+                    </Grid>
+
+                    <Grid x:Name="MusicPlayBar" Grid.Row="1">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="6*" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock x:Name="CurrentTime" Text="0:00" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,0,0" Grid.Column="0" />
+                        <Slider x:Name="PlayBarSlider" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Stretch" Margin="10,0,10,0" Minimum="0" Maximum="100" Value="0"/>
+                        <TextBlock x:Name="TotalTime" Text="0:00" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,10,0" Grid.Column="2" />
+                    </Grid>
+                </Grid>
+            </Grid>
+
+            <Grid x:Name="MusicVolumeControls" Grid.Column="2">
+                <Slider x:Name="VolumeSlider"
+                        Minimum="0"
+                        Maximum="100"
+                        Value="50"
+                        VerticalAlignment="Center"
+                        HorizontalAlignment="Stretch"
+                        Margin="10,0,10,0" />
+            </Grid>
+            
+        </Grid>
+
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="4*" />
+            </Grid.ColumnDefinitions>
+
+            <Grid x:Name="Playlists" Grid.Column="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="10*" />
+                </Grid.RowDefinitions>
+
+                <Border Background="Pink" Margin="0" Grid.Row="0">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="1.4*" />
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock Text="Playlists" FontSize="18" Margin="2" Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+
+                        <Button
+                            x:Name="CreatePlaylistDropdownButton"
+                            Margin="10"
+                            Grid.Column="1"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Top"
+                            Click="CreatePlaylistDropdownButton_Click"
+                            Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" >
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+
+                                <Viewbox Grid.Column="0">
+                                    <Path
+                                        Fill="Black"
+                                        Stretch="Fill"
+                                        Data="M440-440H200v-80h240v-240h80v240h240v80H520v240h-80v-240Z" />
+                                </Viewbox>
+                                <Viewbox Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                    <Path
+                                        Fill="Black"
+                                        Stretch="Fill"
+                                        Data="M400-280v-400l200 200-200 200Z"
+                                        RenderTransformOrigin="0.5, 0.5" >
+                                        <Path.RenderTransform>
+                                            <ScaleTransform ScaleX="0.5" ScaleY="0.5" />
+                                        </Path.RenderTransform>
+                                    </Path>
+                                </Viewbox>
+                            </Grid>
+                            <Button.ContextMenu>
+                                <ContextMenu
+                                    BorderBrush="Blue">
+                                    <MenuItem
+                                        Header="Create Empty Playlist"
+                                        Click="CreateEmptyPlaylistButton_Click" />
+                                    <MenuItem
+                                        Header="Import Playlist From Youtube"
+                                        Click="ImportPlaylistFromYoutubeButton_Click" />
+                                    <MenuItem
+                                        Header="Import Playlist From Spotify"
+                                        Click="ImportPlaylistFromSpotifyButton_Click" />
+                                </ContextMenu>
+                            </Button.ContextMenu>
+                        </Button>
+                    </Grid>
+                </Border>
+
+                <Grid Grid.Row="1" Background="Red" Name="PlaylistsGrid">
+
+                </Grid>
+            </Grid>
+        </Grid>
     </Grid>
 </Window>
